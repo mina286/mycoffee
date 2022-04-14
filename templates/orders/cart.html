@@ -1,0 +1,64 @@
+{%extends 'base.html'%}
+{%load static%}
+{%block content%}
+{% if orderdetails%}
+<hr>
+<h5 style="margin-left: 20px;" >full name: {{request.user.first_name}} {{request.user.last_name}}</h5>
+<h5  style="margin-left: 20px;">Order_Num: {{order.id}}</h5>
+
+<h5  style="margin-left: 20px;">Total_order: {{total}}$</h5>
+
+    <form method="get" action="{%url 'payment'%}">
+      <button type="submit" name="btnchek"  class="btn btn-outline-danger" >chockout</button>
+    </form>
+
+    <a href="{%url 'products' %}" class="btn btn-outline-danger">continue shopping</a>
+
+<hr>
+<table class="table table-hover table-dark">
+  {%else%}
+  {%include 'partials/_alert.html'%}
+  <table class="table table-hover table-dark" style="display: none">
+
+{%endif%}
+    
+
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Price</th>
+        <th scope="col">Quantity</th>
+        <th scope="col">product</th>
+        <th scope="col">Image</th>
+        <th scope="col">Total</th>
+        <th scope="col">control</th>
+
+
+      </tr>
+    </thead>
+    <tbody>
+      {%for details_product in orderdetails%}
+      <tr>
+        <th scope="row">{{forloop.counter}}</th>
+        <td>{{details_product.price}}</td>
+        <td>
+          <a href="{%url 'sub_quantity' details_id=details_product.id%}" class="btn btn-warning btn-sm mr-2">-</a>
+          {{details_product.quantity}}
+          <a href="{%url 'add_quantity' details_id=details_product.id%}" class="btn btn-warning btn-sm mr-2">+</a>
+
+        </td>
+        <td>{{details_product.product.name}}</td>
+        <td><img src="{{details_product.product.photo.url}}" style="width: 60px; height: 60px;"></td>
+        <td>{% widthratio details_product.price 1 details_product.quantity %}</td>
+        <td>
+          <a href="{%url 'remove_product' details_id=details_product.id%}" class="btn btn-outline-danger">remove</a>
+        </td>
+
+
+      </tr>
+      {%endfor%}
+     
+      
+    </tbody>
+  </table>
+{%endblock%}

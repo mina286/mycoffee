@@ -1,0 +1,49 @@
+{%extends 'base.html'%}
+{%load static%}
+
+{%block content%}
+
+    <div class="my-form container p-5 my-5 rounded border border-warning">
+    {%include 'partials/_alert.html'%}
+    {%if order %}
+    <form method="post" action="{%url 'payment'  %}" style="display: none">
+    {%endif%}
+     <form method="post" action="{%url 'payment' %}" >
+    
+         {% csrf_token %}
+    
+         <h2 class="text-center">checkout</h2>
+         <hr>
+         <div class="form-row">
+             <div class="form-group col-md-6">
+                 <label for="inputFirstName">Person anme</label>
+                 <input name="pname"  type="text" class="form-control" id="inputFirstName" required>
+             </div>
+             <div class="form-group col-md-6">
+                 <label for="inputLastName"> phone</label>
+                 <input name="phone"  type="text" class="form-control" id="inputLastName" required>
+             </div>
+         </div>
+         <div class="form-row">
+             <div class="form-group col-md-6">
+                 <label for="inputCity">card number</label>
+                 <input name="cardnumber"
+                  type="text" class="form-control" id="inputCity" required 
+                  placeholder="1234 1234 1234 1234">
+             </div>
+             <div class="form-group col-md-4">
+                 <label for="inputZip">expire</label>
+                 <input name="expire" 
+                 type="text" class="form-control" id="inputZip" required placeholder="mm/yy">
+             </div>
+             <div class="form-group col-md-2">
+                 <label for="inputZip">security code</label>
+                 <input name="code"  type="text" class="form-control" id="inputZip" placeholder="111" required>
+             </div>
+         </div>
+         <input name="btnchek" type="hidden" class="btn btn-warning">
+         <button name="btnpayment" type="submit" class="btn btn-warning">payment</button>
+     </form>
+
+    </div>
+    {%endblock%}

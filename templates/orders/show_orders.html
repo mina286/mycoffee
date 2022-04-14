@@ -1,0 +1,61 @@
+{%extends 'base.html'%}
+{%load static%}  
+{%block content%}
+
+{%if request.user.is_authenticated and items_count == 0%}
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+  <strong>warning</strong> no order here
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<table class="table table-hover table-dark" style="display: none">
+
+{%else%}
+<table class="table table-hover table-dark">
+{%endif%}
+    <thead>
+      <tr style="text-align:center;">
+        <th scope="row">order</th>
+
+        </tr>
+
+        <tr style="text-align:center">
+        <th scope="row">order_number :{{order.count}}</th>
+
+        </tr>
+      <tr>
+        <th scope="col">order number</th>
+        <th scope="col">Date & Time</th>
+        <th scope="col">items count</th>
+        <th scope="col">total</th>
+        <th scope="col">is_finished</th>
+        <th scope="col">control</th>
+
+      </tr>
+    </thead>
+
+    <tbody>
+      {% for oneorder in order %}
+      <tr>
+        <th scope="row">{{oneorder.id}}</th>
+        <td>{{oneorder.date_order|date:'Y m d'}} {{oneorder.date_order|time:'g i a' }}</td>
+        <td>{{oneorder.items_count}}</td>
+
+        <td>{{oneorder.total}}</td>
+        <td>{{oneorder.is_finished}}</td>
+        <td>
+          <form method="post" action="{%url 'show_orders' %}">
+            {%csrf_token%}
+            <input name="id_orderremove" value="{{oneorder.id}}" type="hidden">
+            <button type="submit" class="btn btn-outline-danger" name="btnremoveorder">remove order</button>
+          </form>
+      </td>
+
+      </tr>
+     {%endfor%}
+      
+    </tbody>
+  </table>
+
+{%endblock%}

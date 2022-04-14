@@ -1,0 +1,70 @@
+{%extends 'base.html'%}
+{%block title%} profile{%endblock%}
+{%block content%}
+<div class="my-form container p-5 my-5 rounded border border-warning">
+    {% include 'partials/_alert.html'%}
+    {%if not request.user.is_authenticated and request.user.is_anonymous %}
+    <h5>you should first login </h5>
+    <form method="post" style="display:none">
+    {%else%}
+    <form method="post" action="{%url 'profile'%}">
+    {%endif%}
+        {%csrf_token%}
+        <h2 class="text-center">Profile</h2>
+        <hr>
+
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="inputFirstName">First Name</label>
+                <input value={{fname}} name="fname" type="text" class="form-control" id="inputFirstName" required>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="inputLastName">Last Name</label>
+                <input value="{{lname}}" name="lname" type="text" class="form-control" id="inputLastName" required>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="inputAddress">Address</label>
+            <input value="{{address}}" name="address" type="text" class="form-control" id="inputAddress" placeholder="1234 Main St" required>
+        </div>
+        <div class="form-group">
+            <label for="inputAddress2">Address 2</label>
+            <input value="{{address2}}" name="address2" type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor" required>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="inputCity">City</label>
+                <input value="{{city}}" name="city" type="text" class="form-control" id="inputCity" required>
+            </div>
+            <div class="form-group col-md-4">
+                <label for="inputZip">State</label>
+                <input value="{{state}}" name="state" type="text" class="form-control" id="inputZip" required>
+            </div>
+            <div class="form-group col-md-2">
+                <label for="inputZip">Zip</label>
+                <input value="{{zip}}" name="zip" type="text" class="form-control" id="inputZip" placeholder="11111" required>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="inputEmail">Email</label>
+            <input value="{{email}}" name="email" type="email" readonly class="form-control-plaintext border border-warning rounded" id="inputEmail" placeholder="name@example.com" required>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="inputUsername">Username</label>
+                <input value="{{username}}" name="username" type="text" readonly class="form-control-plaintext border border-warning rounded" id="inputUsername" placeholder="ahmed" required>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="inputPassword">Password</label>
+                <input value="{{password}}" name="pass" type="password" class="form-control" id="inputPassword" required>
+            </div>
+        </div>
+
+        <button type="submit" name="btnremoveprofile" class="btn btn-warning">remove account</button>
+        <button type="submit" name="btnprofile" class="btn btn-warning  ml-5">Save Changes</button>
+    </form>
+
+
+</div>
+{%endblock%}
